@@ -1,1 +1,1493 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoshin Movement Studio | 2014-2026</title>
+    
+    <style>
+        /* Custom Font Loading */
+        @font-face {
+            font-family: 'AmsiProNarw';
+            src: url('fonts/AmsiProNarw-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'AmsiProNarw';
+            src: url('fonts/AmsiProNarw-SemiBold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        /* CSS Variables */
+        :root {
+            /* Colors */
+            --primary-blue: #3FA9F5;
+            --dark-grey: #3D3D3D;
+            --white: #FFFFFF;
+            --off-white: #F8F8F8;
+            --text-dark: #3D3D3D;
+            --text-light: #666666;
+            --accent-blue: #2E8FD9;
+            
+            /* Simplified Typography - Just 6 Sizes */
+            --text-small: 12px;       /* badges, labels */
+            --text-base: 16px;        /* body text, paragraphs */
+            --text-large: 20px;       /* large text, intros */
+            --text-heading: 28px;     /* h3, h4, medium headings */
+            --text-big: 48px;         /* h2, section titles */
+            --text-hero: 72px;        /* h1, hero, kanji */
+            
+            /* Line Heights */
+            --line-tight: 1.2;
+            --line-normal: 1.6;
+            --line-relaxed: 1.8;
+            
+            /* Letter Spacing */
+            --space-tight: 0;
+            --space-normal: 0.05em;
+            --space-wide: 0.1em;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+            
+            /* Spacing system */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 32px;
+            --space-lg: 64px;
+            --space-xl: 96px;
+            --space-2xl: 128px;
+            
+            /* Border radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+        
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'AmsiProNarw', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            color: var(--text-dark);
+            line-height: var(--line-relaxed);
+            overflow-x: hidden;
+            background: var(--white);
+            font-size: var(--text-base);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'AmsiProNarw', sans-serif;
+            font-weight: 600;
+            line-height: var(--line-tight);
+            text-transform: uppercase;
+            letter-spacing: var(--space-wide);
+        }
+        
+        /* Modern Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #3D3D3D 0%, #3FA9F5 100%);
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+            filter: grayscale(30%);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(61, 61, 61, 0.8) 0%, 
+                rgba(63, 169, 245, 0.6) 100%
+            );
+        }
+        
+        /* Animated grain texture overlay */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            padding: 2rem;
+            max-width: 1000px;
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        }
+        
+        .hero h1 {
+            font-size: clamp(48px, 10vw, var(--text-hero));
+            font-weight: 600;
+            letter-spacing: var(--space-wide);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-dates {
+            font-size: clamp(28px, 4vw, var(--text-big));
+            font-weight: 400;
+            letter-spacing: var(--space-wide);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+        }
+        
+        .hero-tagline {
+            font-size: clamp(18px, 2.5vw, var(--text-large));
+            font-weight: 400;
+            letter-spacing: var(--space-normal);
+            opacity: 0;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards, bounce 2s ease-in-out 2s infinite;
+            z-index: 2;
+        }
+        
+        .scroll-arrow {
+            width: 32px;
+            height: 32px;
+            border-left: 2px solid var(--white);
+            border-bottom: 2px solid var(--white);
+            transform: rotate(-45deg);
+        }
+        
+        /* Modern Section Styles */
+        section {
+            padding: var(--space-2xl) var(--space-md);
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: clamp(36px, 6vw, var(--text-big));
+            text-align: center;
+            margin-bottom: 16px;
+            color: var(--primary-blue);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: var(--text-large);
+            color: var(--text-light);
+            margin-bottom: var(--space-lg);
+            font-weight: 400;
+            line-height: var(--line-normal);
+        }
+        
+        /* Opening Story - Modern Card Design */
+        .opening-story {
+            background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
+            position: relative;
+        }
+        
+        .opening-story .container {
+            max-width: 900px;
+        }
+        
+        .story-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(63, 169, 245, 0.1);
+        }
+        
+        .opening-story h3 {
+            font-size: var(--text-heading);
+            color: var(--primary-blue);
+            margin-bottom: 24px;
+            margin-top: 48px;
+        }
+        
+        .opening-story h3:first-of-type {
+            margin-top: 0;
+        }
+        
+        .opening-story p {
+            font-size: var(--text-base);
+            margin-bottom: 28px;
+            color: var(--text-dark);
+            line-height: var(--line-relaxed);
+        }
+        
+        .kanji {
+            font-size: var(--text-hero);
+            color: var(--primary-blue);
+            display: block;
+            text-align: center;
+            margin: 48px 0;
+            font-weight: 400;
+            opacity: 0.9;
+            text-shadow: 0 2px 8px rgba(63, 169, 245, 0.2);
+        }
+        
+        /* Modern Timeline with Bento Grid Influence */
+        .timeline {
+            background: var(--white);
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                var(--primary-blue) 10%, 
+                var(--primary-blue) 90%, 
+                transparent 100%
+            );
+            transform: translateX(-50%);
+            opacity: 0.2;
+        }
+        
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            align-items: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            order: 2;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-image {
+            order: 1;
+        }
+        
+        .timeline-content {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .timeline-content h3 {
+            font-size: var(--text-heading);
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+        
+        .timeline-year {
+            font-size: clamp(48px, 8vw, var(--text-hero));
+            font-weight: 600;
+            color: var(--primary-blue);
+            line-height: 1;
+            margin-bottom: 16px;
+            opacity: 0.15;
+            text-shadow: 0 0 20px rgba(63, 169, 245, 0.3);
+        }
+        
+        .timeline-content p {
+            font-size: var(--text-base);
+            color: var(--text-dark);
+            line-height: var(--line-relaxed);
+        }
+        
+        .timeline-image {
+            width: 100%;
+            height: 450px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        
+        .timeline-image::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+        
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .timeline-image:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* Modern Gallery Grid */
+        .gallery {
+            background: var(--off-white);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            aspect-ratio: 1;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .gallery-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(63, 169, 245, 0) 0%, 
+                rgba(63, 169, 245, 0.3) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.12);
+        }
+        
+        /* Modern Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: var(--white);
+            font-size: 3rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1) rotate(90deg);
+        }
+        
+        /* Modern Testimonials - Glass Cards */
+        .testimonials {
+            background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(63, 169, 245, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-blue), var(--accent-blue));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .testimonial-card:hover::before {
+            opacity: 1;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(63, 169, 245, 0.2);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-large);
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .testimonial-name {
+            flex: 1;
+        }
+        
+        .testimonial-name h4 {
+            font-size: var(--text-base);
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: none;
+            letter-spacing: var(--space-tight);
+        }
+        
+        .stars {
+            color: #FFB800;
+            font-size: var(--text-base);
+            letter-spacing: 3px;
+        }
+        
+        .testimonial-text {
+            font-size: var(--text-base);
+            line-height: var(--line-normal);
+            color: var(--text-dark);
+            font-style: italic;
+            margin-top: 16px;
+        }
+        
+        .testimonial-badge {
+            font-size: var(--text-small);
+            color: var(--primary-blue);
+            margin-top: 24px;
+            text-transform: uppercase;
+            letter-spacing: var(--space-wide);
+            font-weight: 600;
+        }
+        
+        /* Philosophy Section */
+        .philosophy {
+            background: var(--white);
+        }
+        
+        .philosophy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--off-white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .philosophy h3 {
+            font-size: var(--text-heading);
+            color: var(--primary-blue);
+            margin-top: 48px;
+            margin-bottom: 24px;
+        }
+        
+        .philosophy h3:first-of-type {
+            margin-top: 0;
+        }
+        
+        .philosophy h4 {
+            font-size: var(--text-large);
+            color: var(--dark-grey);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .philosophy p, .philosophy ul {
+            font-size: var(--text-base);
+            line-height: var(--line-relaxed);
+            margin-bottom: 24px;
+        }
+        
+        .philosophy ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .philosophy li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .philosophy li:before {
+            content: "→";
+            position: absolute;
+            left: 8px;
+            color: var(--primary-blue);
+            font-size: var(--text-large);
+            font-weight: 600;
+        }
+        
+        /* Core Values - Modern Grid */
+        .core-values {
+            background: var(--off-white);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .value-item {
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(63, 169, 245, 0.05) 0%, 
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .value-item:hover::before {
+            opacity: 1;
+        }
+        
+        .value-item:hover {
+            transform: translateX(12px);
+            box-shadow: var(--shadow-xl);
+            border-left-width: 6px;
+        }
+        
+        .value-number {
+            font-size: var(--text-big);
+            font-weight: 600;
+            color: var(--primary-blue);
+            opacity: 0.15;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .value-item h4 {
+            font-size: var(--text-large);
+            color: var(--dark-grey);
+            margin-bottom: 16px;
+            text-transform: none;
+        }
+        
+        .value-item p {
+            font-size: var(--text-base);
+            color: var(--text-dark);
+            line-height: var(--line-normal);
+        }
+        
+        /* Modern Contact Form */
+        .contact {
+            background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
+            position: relative;
+        }
+        
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-intro {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            font-size: var(--text-base);
+            color: var(--text-light);
+            line-height: var(--line-normal);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: var(--space-normal);
+            font-size: var(--text-small);
+            color: var(--text-dark);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 24px;
+            border: 2px solid rgba(63, 169, 245, 0.15);
+            border-radius: var(--radius-md);
+            font-family: 'AmsiProNarw', sans-serif;
+            font-size: var(--text-base);
+            background: var(--white);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-dark);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(63, 169, 245, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'AmsiProNarw', sans-serif;
+            font-size: var(--text-base);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: var(--space-wide);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        /* Closing Message - Dramatic */
+        .closing {
+            background: linear-gradient(135deg, var(--dark-grey) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: clamp(6rem, 15vw, 12rem) 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .closing::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .closing .container {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .closing h2 {
+            font-size: clamp(36px, 7vw, var(--text-big));
+            margin-bottom: 48px;
+            font-weight: 600;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .closing p {
+            font-size: var(--text-large);
+            line-height: var(--line-relaxed);
+            margin-bottom: 32px;
+            opacity: 0.95;
+        }
+        
+        .closing strong {
+            font-weight: 600;
+            color: var(--white);
+            font-size: var(--text-large);
+        }
+        
+        .signature {
+            margin-top: 64px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .signature-name {
+            font-size: var(--text-heading);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .signature-title {
+            font-size: var(--text-base);
+            opacity: 0.9;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+        
+        .signature-org {
+            font-size: var(--text-large);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .signature-dates {
+            font-size: var(--text-large);
+            letter-spacing: var(--space-normal);
+            margin-top: 16px;
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        footer p {
+            margin-bottom: 8px;
+            opacity: 0.9;
+            font-size: var(--text-base);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            margin-top: 24px;
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(12px); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            :root {
+                --space-2xl: 96px;
+                --space-xl: 64px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --space-2xl: 64px;
+                --space-xl: 48px;
+                --space-lg: 32px;
+            }
+            
+            section {
+                padding: var(--space-xl) var(--space-sm);
+            }
+            
+            .timeline::before {
+                display: none;
+            }
+            
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-image {
+                order: initial;
+            }
+            
+            .timeline-year {
+                font-size: 48px;
+            }
+            
+            .timeline-image {
+                height: 300px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .closing {
+                padding: 64px 24px;
+            }
+            
+            .story-card,
+            .philosophy-content {
+                padding: var(--space-md);
+            }
+        }
+        
+        /* Smooth Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <img class="hero-background" src="images/hero.jpg" alt="Shoshin Movement">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img class="logo" src="images/logo.png" alt="Shoshin Movement Studio Logo">
+            <h1>Shoshin Movement</h1>
+            <div class="hero-dates">2014 — 2026</div>
+            <div class="hero-tagline">Everyone Deserves to Move Better</div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Opening Story -->
+    <section class="opening-story">
+        <div class="container">
+            <h2 class="section-title">The Beginning</h2>
+            
+            <div class="story-card reveal">
+                <p>In 2014, something unique came to Cairns. Shoshin Movement Studio opened its doors as North Queensland's first and only movement-focused gym. Founded by David D'Amore, a former tradesman turned movement specialist who had experienced his own journey from chronic pain to physical freedom, Shoshin Movement wasn't just another fitness center—it was a philosophy made physical.</p>
+                
+                <span class="kanji">初心</span>
+                
+                <p>The name "Shoshin" (初心) comes from a Zen Buddhist concept meaning "beginner's mind"—an attitude of openness, eagerness, and lack of preconceptions when learning, even at an advanced level. This wasn't about perfection. It was about embracing the journey, celebrating small victories, and finding joy in the process of becoming stronger, more mobile, and more capable.</p>
+                
+                <p>For twelve years, we helped hundreds of people in Cairns improve their quality of life through better movement. We watched complete beginners learn to handstand. We saw people in their 60s move better than they did in their 30s. We built a community that believed movement isn't just exercise—it's the foundation of a vibrant, pain-free life.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline">
+        <div class="container">
+            <h2 class="section-title">The Journey</h2>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2014</div>
+                    <h3>The Birth of Shoshin Movement</h3>
+                    <p>David D'Amore brought his holistic approach to Cairns—combining strength, flexibility, handstand, and playful movement in a way the region had never seen. The response was immediate. From day one, people were drawn to this different way of training.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="images/timeline-1.jpg" alt="Early days of Shoshin Movement">
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Tiny Studio Era</h3>
+                    <p>Our first home was a cozy 75 square meter space. Picture this: up to 25 people crammed into that tiny studio, training together, laughing together, sweating together. It was tight, it was hot, but it created an incredible vibe. This is where the Shoshin community was born.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="images/timeline-2.jpg" alt="Group training in the tiny studio">
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Spreading Our Wings</h3>
+                    <p>As our community grew, so did our need for space. We moved to a larger facility at 82 Grafton Street in the heart of Cairns CBD, inside the Mainstreet Arcade. A breath of fresh air. Room to move. Room to grow. This became the home where Shoshin truly flourished.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="images/timeline-3.jpg" alt="New studio at Grafton Street">
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Building the Team</h3>
+                    <p>The best students became teachers. Will Stormont, Holly Muir, Rossi Postler, and Annina Strengell joined the coaching team, each bringing their unique gifts to our tribe. The gym evolved from one person's vision into a collective of passionate movement practitioners, all united by the philosophy of the beginner's mind.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="images/timeline-4.jpg" alt="Coach training member">
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2014-2026</div>
+                    <h3>Twelve Years of Movement</h3>
+                    <p>From handstands to mobility flows, from first-timers to advanced practitioners, from age 13 to 70+—Shoshin Movement became a second home for hundreds of people seeking something more than a conventional gym experience. We taught people to move without pain, build real functional strength, find joy in physical challenge, and embrace the beginner's mind at every level.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="images/timeline-5.jpg" alt="Training through the years">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="gallery">
+        <div class="container">
+            <h2 class="section-title">The Memories</h2>
+            <p class="section-subtitle">Moments that defined our community</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/gallery-1.jpg" alt="Straddle handstand">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-2.jpg" alt="Pancake stretch">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-3.jpg" alt="L-sit hold">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-4.jpg" alt="Chin-up strength">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-5.jpg" alt="Flexibility training">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-6.jpg" alt="Planche progression">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-7.jpg" alt="Wall handstand">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-8.jpg" alt="Group training session">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/gallery-9.jpg" alt="Group handstand practice">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What People Are Saying</h2>
+            <p class="section-subtitle">Stories from our community</p>
+            
+            <div class="testimonials-grid">
+                <!-- PLACEHOLDER TESTIMONIALS - Replace with your actual reviews -->
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">S</div>
+                        <div class="testimonial-name">
+                            <h4>Sarah M.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Shoshin Movement completely changed my relationship with exercise. I went from someone who couldn't touch my toes to achieving my first handstand. The supportive community and expert coaching made all the difference."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+                
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">J</div>
+                        <div class="testimonial-name">
+                            <h4>James K.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"At 62, I thought my body's best days were behind me. Shoshin proved me wrong. I'm stronger and more mobile now than I was 20 years ago. This place gave me my life back."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+                
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">L</div>
+                        <div class="testimonial-name">
+                            <h4>Lisa T.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"This isn't just a gym—it's a family. The beginner's mind philosophy helped me stop comparing myself to others and focus on my own journey. Best decision I ever made."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+                
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-name">
+                            <h4>Mike R.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"After years of back pain from office work, I finally found relief through the movement practices at Shoshin. The coaches' attention to detail and proper progression is unmatched."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+                
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">K</div>
+                        <div class="testimonial-name">
+                            <h4>Katie W.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"I've tried every gym in Cairns, but nothing compares to Shoshin. The holistic approach to strength, flexibility, and skill development is truly unique. I'll miss this place deeply."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+                
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">D</div>
+                        <div class="testimonial-name">
+                            <h4>Daniel P.</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Shoshin taught me that movement can be playful and joyful, not just grueling workouts. Learning to handstand in my 40s was something I never thought possible. Thank you for the memories."</p>
+                    <div class="testimonial-badge">Verified Member</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy">
+        <div class="container">
+            <h2 class="section-title">What Made Us Different</h2>
+            
+            <div class="philosophy-content reveal">
+                <h3>The Beginner's Mind</h3>
+                <p>Shoshin (初心) — the beginner's mind. When you're learning to handstand, you'll fall. A lot. Your first pull-up attempt might not get you off the ground. Your hamstrings might scream in your first mobility class. That's exactly where you're supposed to be.</p>
+                
+                <p>We taught our members that difficulty isn't failure—it's the entry point to growth. The beginner's mind means approaching every challenge with openness, curiosity, and zero ego. Whether you were 15 or 65, whether you'd never exercised before or you were an advanced athlete, everyone started somewhere.</p>
+                
+                <h3>Movement as Medicine</h3>
+                <p>We believed that movement shouldn't just be about aesthetics or performance. It should improve your quality of life. That meant:</p>
+                <ul>
+                    <li>Moving without pain</li>
+                    <li>Playing with your kids without getting hurt</li>
+                    <li>Maintaining independence as you age</li>
+                    <li>Building a body that's strong, supple, and resilient</li>
+                </ul>
+                
+                <h3>A Holistic Approach</h3>
+                <p>Our method built the foundations of strength, flexibility, and skill through a progressive and holistic approach—suitable for all levels and abilities. We combined:</p>
+                <ul>
+                    <li>Gymnastics and calisthenics for bodyweight strength</li>
+                    <li>Mobility and flexibility work for joint health</li>
+                    <li>Handbalance for focus and body awareness</li>
+                    <li>Playful movement because we never forgot how to have fun</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="core-values">
+        <div class="container">
+            <h2 class="section-title">Our Core Values</h2>
+            <p class="section-subtitle">The principles that guided us</p>
+            
+            <div class="values-grid">
+                <div class="value-item reveal">
+                    <div class="value-number">1</div>
+                    <h4>Beginner's Mind (Shoshin)</h4>
+                    <p>Approaching every session with fresh perspective and openness, no matter our experience level.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">2</div>
+                    <h4>Mindful Movement</h4>
+                    <p>Cultivating deep mind-body connection, exercising with intention and purpose.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">3</div>
+                    <h4>Active Learning</h4>
+                    <p>Taking responsibility for our own development, seeking challenges, and embracing discomfort.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">4</div>
+                    <h4>Enjoy the Journey</h4>
+                    <p>Celebrating small victories, learning from mistakes, finding joy in the process—not just the destination.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">5</div>
+                    <h4>No Ego</h4>
+                    <p>Focusing on our own progress without comparison, creating a supportive environment where everyone belongs.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">6</div>
+                    <h4>Community Over Competition</h4>
+                    <p>Building a family of like-minded individuals who support and inspire each other.</p>
+                </div>
+                
+                <div class="value-item reveal">
+                    <div class="value-number">7</div>
+                    <h4>Progress Over Perfection</h4>
+                    <p>Recognizing that building a strong, capable body is a journey that unfolds over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-intro">Have memories to share? Want to reach out? Send us a message.</p>
+            
+            <div class="contact-container">
+                <form action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Replace with your actual Web3Forms access key -->
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                    
+                    <!-- Redirect URL after submission (optional) -->
+                    <input type="hidden" name="redirect" value="https://yourdomain.com/thank-you.html">
+                    
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing Message -->
+    <section class="closing">
+        <div class="container">
+            <h2>Thank You</h2>
+            
+            <p>After twelve remarkable years, Shoshin Movement Studio will close its doors in February 2026.</p>
+            
+            <p>To every member who walked through our doors—whether you stayed for a week or a decade—thank you. You trusted us with your bodies, your goals, and your time. You showed up when it was hard. You celebrated victories, big and small. You embraced the beginner's mind and proved that anyone, at any age, can move better.</p>
+            
+            <p>To Will, Holly, Rossi, Annina, and every coach who shared their knowledge and passion—thank you for building this community alongside me. You made Shoshin Movement more than just my vision; you made it a home for hundreds of people.</p>
+            
+            <p>To Cairns—thank you for embracing something different. For being willing to try handstands, explore mobility, and redefine what "fitness" could mean. Shoshin Movement was Cairns' first and only movement-focused gym, and while that chapter is closing, I hope the impact continues in how you move through life.</p>
+            
+            <p>Movement has always been about more than physical ability. It's about curiosity, resilience, and the willingness to try. It's about showing up with a beginner's mind, again and again. That's what Shoshin Movement stood for, and that philosophy doesn't end when the doors close.</p>
+            
+            <p><strong>Keep moving. Keep learning. Keep approaching life with openness and curiosity.</strong></p>
+            
+            <div class="signature">
+                <div class="signature-name">David D'Amore</div>
+                <div class="signature-title">Founder & Program Director</div>
+                <div class="signature-org">Shoshin Movement Studio</div>
+                <div class="signature-dates">2014 — 2026</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Level 2, 82 Grafton Street, Cairns QLD 4870</p>
+        <p class="footer-tagline">"Everyone Deserves to Move Better"</p>
+        <p style="margin-top: 2rem; font-size: 0.9rem;">© 2014-2026 Shoshin Movement Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for timeline and reveal animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+        
+        // Observe reveal elements
+        document.querySelectorAll('.reveal').forEach(item => {
+            observer.observe(item);
+        });
+        
+        // Gallery lightbox
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                lightboxImg.src = item.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close lightbox on background click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Close lightbox on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+        
+        // Form submission handling (Web3Forms)
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            // You can add custom validation or animations here if needed
+            // Web3Forms will handle the actual submission
+        });
+    </script>
+</body>
+</html>
